@@ -1,0 +1,7 @@
+{
+  "pack": {
+    "description": "ChemCraft tintable substances (liquid, dust, gas, crystal, metal)",
+    "min_format": 97,
+    "max_format": 97
+  }
+}

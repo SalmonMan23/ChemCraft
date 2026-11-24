@@ -1,0 +1,9 @@
+name: ChemCraft
+version: 1.0.0
+main: org.sutormin.chemcraft.ChemCraftPlugin
+api-version: '26.3'
+description: A chemistry plugin that adds chemistry mechanics
+
+permissions:
+  chemcraft.use:
+    default: true
