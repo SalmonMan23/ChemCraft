@@ -1,120 +1,131 @@
 package org.sutormin.chemcraft.command;
 
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.suggestion.Suggestions;
-import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import org.sutormin.chemcraft.chemistry.ChemistryEngine;
-import org.sutormin.chemcraft.item.ChemItemManager;
-import org.sutormin.chemcraft.lab.LabGuiManager;
+import org.sutormin.chemcraft.ChemCraftPlugin;
+import org.sutormin.chemcraft.chemistry.ChemistryService;
+import org.sutormin.chemcraft.chemistry.MoleculeInfo;
+import org.sutormin.chemcraft.item.ChemItems;
+import org.sutormin.chemcraft.lab.LabType;
+import org.sutormin.chemcraft.util.Chat;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.Locale;
 
 public final class ChemCommand {
-  private final Plugin plugin;
-  private final ChemItemManager itemManager;
-  private final ChemistryEngine chemistryEngine;
-  private final LabGuiManager labGuiManager;
+  private final ChemCraftPlugin plugin;
+  private final ChemItems items;
+  private final ChemistryService chemistry;
 
-  public ChemCommand(
-    Plugin plugin,
-    ChemItemManager itemManager,
-    ChemistryEngine chemistryEngine,
-    LabGuiManager labGuiManager
-  ) {
+  public ChemCommand(ChemCraftPlugin plugin, ChemItems items, ChemistryService chemistry) {
     this.plugin = plugin;
-    this.itemManager = itemManager;
-    this.chemistryEngine = chemistryEngine;
-    this.labGuiManager = labGuiManager;
+    this.items = items;
+    this.chemistry = chemistry;
   }
 
   public void register(Commands commands) {
     LiteralCommandNode<CommandSourceStack> root = Commands.literal("chem")
-      .requires(src -> src.getSender().hasPermission("chemcraft.use"))
-      .then(Commands.literal("purifier").executes(ctx -> giveTool(ctx, "purifier")))
-      .then(Commands.literal("lab").executes(ctx -> giveTool(ctx, "lab")))
-      .then(Commands.literal("analyzer").executes(ctx -> giveTool(ctx, "analyzer")))
-      .then(Commands.literal("give")
+      .then(Commands.literal("tutorial").requires(src -> src.getSender().hasPermission("chemcraft.tutorial")).executes(this::tutorial))
+      .then(Commands.literal("reload").requires(src -> src.getSender().hasPermission("chemcraft.admin")).executes(this::reload))
+      .then(Commands.literal("purifier").requires(src -> src.getSender().hasPermission("chemcraft.admin")).executes(ctx -> givePurifier(ctx)))
+      .then(Commands.literal("analyzer").requires(src -> src.getSender().hasPermission("chemcraft.admin")).executes(ctx -> giveAnalyzer(ctx)))
+      .then(Commands.literal("storage").requires(src -> src.getSender().hasPermission("chemcraft.admin")).executes(ctx -> giveStorage(ctx)))
+      .then(Commands.literal("lab").requires(src -> src.getSender().hasPermission("chemcraft.admin"))
+        .executes(ctx -> giveLab(ctx, LabType.STANDARD))
+        .then(Commands.argument("type", StringArgumentType.word())
+          .suggests((ctx, builder) -> {
+            for (String type : List.of("standard", "furnace", "cooler", "electrical")) builder.suggest(type);
+            return builder.buildFuture();
+          })
+          .executes(this::giveLabTyped)))
+      .then(Commands.literal("give").requires(src -> src.getSender().hasPermission("chemcraft.admin"))
         .then(Commands.argument("smiles", StringArgumentType.string())
-        .suggests((ctx, builder) -> {
-          for (String example : List.of("O", "Cl", "[Na]", "CCO", "O=O")) {
-            builder.suggest(example);
-          }
-          return builder.buildFuture();
-        })
-          .then(Commands.argument("moles", DoubleArgumentType.doubleArg(0.0))
-            .then(Commands.argument("count", IntegerArgumentType.integer(1, 64))
-              .executes(this::executeGive))))
+          .suggests((ctx, builder) -> {
+            for (String example : List.of("O", "O=C=O", "[Fe]", "[Na+].[OH-]", "CCO", "O=O", "N#N", "[H][H]")) builder.suggest(example);
+            return builder.buildFuture();
+          })
+          .then(Commands.argument("density", DoubleArgumentType.doubleArg())
+            .then(Commands.argument("grams", DoubleArgumentType.doubleArg(0.000001))
+              .then(Commands.argument("count", IntegerArgumentType.integer(1, 64))
+                .executes(this::giveChem))))))
       .build();
-
-    commands.register(root, "ChemCraft command", List.of());
+    commands.register(root, "ChemCraft commands", List.of());
   }
 
-  private CompletableFuture<Suggestions> suggestSpecs(CommandContext<CommandSourceStack> ctx, SuggestionsBuilder builder) {
-    for (String example : List.of("O:1.0", "Cl:1.0", "[Na]:1.0", "CCO:1.0", "O=O:1.0")) {
-      builder.suggest(example);
-    }
-    return builder.buildFuture();
-  }
-
-  private int giveTool(CommandContext<CommandSourceStack> ctx, String toolType) {
+  private int tutorial(CommandContext<CommandSourceStack> ctx) {
     CommandSender sender = ctx.getSource().getSender();
-    if (!(sender instanceof Player player)) {
-      sender.sendMessage("Only players can receive ChemCraft tools.");
-      return 0;
-    }
-    ItemStack tool = switch (toolType) {
-      case "purifier" -> itemManager.createPurifier();
-      case "lab" -> itemManager.createLab();
-      case "analyzer" -> itemManager.createAnalyzer();
-      default -> null;
-    };
-    if (tool == null) return 0;
-
-    itemManager.giveToPlayer(player, tool);
-    player.sendMessage(Component.text("Gave " + toolType + ".", NamedTextColor.GREEN));
+    if (!(sender instanceof Player player)) return 0;
+    items.give(player, TutorialBook.create());
     return 1;
   }
 
-  private int executeGive(CommandContext<CommandSourceStack> ctx) {
+  private int reload(CommandContext<CommandSourceStack> ctx) {
+    plugin.reloadChemConfig();
+    return 1;
+  }
+
+  private int givePurifier(CommandContext<CommandSourceStack> ctx) {
     CommandSender sender = ctx.getSource().getSender();
-    if (!(sender instanceof Player player)) {
-      sender.sendMessage("Only players can receive ChemCraft items.");
+    if (!(sender instanceof Player player)) return 0;
+    items.give(player, items.createPurifier());
+    return 1;
+  }
+
+  private int giveAnalyzer(CommandContext<CommandSourceStack> ctx) {
+    CommandSender sender = ctx.getSource().getSender();
+    if (!(sender instanceof Player player)) return 0;
+    items.give(player, items.createAnalyzer());
+    return 1;
+  }
+
+  private int giveStorage(CommandContext<CommandSourceStack> ctx) {
+    CommandSender sender = ctx.getSource().getSender();
+    if (!(sender instanceof Player player)) return 0;
+    items.give(player, items.createStorage());
+    return 1;
+  }
+
+  private int giveLabTyped(CommandContext<CommandSourceStack> ctx) {
+    LabType type = LabType.fromArg(StringArgumentType.getString(ctx, "type"));
+    if (type == null) {
+      Chat.err(ctx.getSource().getSender(), "Unknown lab type. Use: " + Arrays.toString(Arrays.stream(LabType.values()).map(t -> t.name().toLowerCase(Locale.ROOT)).toArray()));
       return 0;
     }
+    return giveLab(ctx, type);
+  }
 
+  private int giveLab(CommandContext<CommandSourceStack> ctx, LabType type) {
+    CommandSender sender = ctx.getSource().getSender();
+    if (!(sender instanceof Player player)) return 0;
+    items.give(player, items.createLab(type));
+    return 1;
+  }
+
+  private int giveChem(CommandContext<CommandSourceStack> ctx) {
+    CommandSender sender = ctx.getSource().getSender();
+    if (!(sender instanceof Player player)) return 0;
     String smiles = StringArgumentType.getString(ctx, "smiles");
-    Double moles = DoubleArgumentType.getDouble(ctx, "moles");
+    double density = DoubleArgumentType.getDouble(ctx, "density");
+    double grams = DoubleArgumentType.getDouble(ctx, "grams");
     int count = IntegerArgumentType.getInteger(ctx, "count");
-
-    if (moles <= 0.0) {
-      player.sendMessage(Component.text("Moles must be greater than 0.", NamedTextColor.RED));
-      return 0;
-    }
-
     try {
-      chemistryEngine.analyze(smiles);
+      MoleculeInfo info = chemistry.analyze(smiles);
+      double moles = grams / info.molarMass();
+      for (int i = 0; i < count; i++) items.give(player, items.createChemItem(smiles, moles, density));
+      return 1;
     } catch (InvalidSmilesException ex) {
-      player.sendMessage(Component.text("Invalid SMILES: " + smiles, NamedTextColor.RED));
+      Chat.err(player, "Invalid SMILES: " + smiles);
       return 0;
     }
-
-    ItemStack stack = itemManager.createChemItem(smiles, moles, count);
-    itemManager.giveToPlayer(player, stack);
-    player.sendMessage(Component.text("Gave " + count + "x " + smiles + " (" + moles + " mol).", NamedTextColor.AQUA));
-    return 1;
   }
 }

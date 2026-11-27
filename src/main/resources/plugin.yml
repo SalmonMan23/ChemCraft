@@ -2,8 +2,13 @@ name: ChemCraft
 version: 1.0.0
 main: org.sutormin.chemcraft.ChemCraftPlugin
 api-version: '26.3'
-description: A chemistry plugin that adds chemistry mechanics
+description: Chemistry simulation with Purifier, Lab, and Analyzer
+authors: [sutormin]
 
 permissions:
-  chemcraft.use:
+  chemcraft.tutorial:
+    description: Allows receiving the ChemCraft tutorial book
     default: true
+  chemcraft.admin:
+    description: Allows ChemCraft admin commands (give machines, chemicals, reload)
+    default: op

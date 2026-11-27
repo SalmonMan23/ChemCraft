@@ -1,0 +1,393 @@
+composition:
+  COAL:
+    - smiles: "[C]"
+      density: 2.26
+      grams: 100
+  COPPER_INGOT:
+    - smiles: "[Cu]"
+      density: 8.96
+      grams: 100
+  DIAMOND:
+    - smiles: "[C]"
+      density: 3.515
+      grams: 100
+  EMERALD:
+    - smiles: "O=[Si]=O"
+      density: 2.65
+      grams: 67
+    - smiles: "O=[Al]O[Al]=O"
+      density: 3.95
+      grams: 19
+    - smiles: "[Be]=O"
+      density: 3.01
+      grams: 14
+  GOLD_INGOT:
+    - smiles: "[Au]"
+      density: 19.32
+      grams: 100
+  IRON_INGOT:
+    - smiles: "[Fe]"
+      density: 7.874
+      grams: 100
+  LAPIS_LAZULI:
+    - smiles: "O=[Si]=O"
+      density: 2.65
+      grams: 25
+    - smiles: "O=[Al]O[Al]=O"
+      density: 3.95
+      grams: 25
+    - smiles: "[Ca+2].[O-]C([O-])=O"
+      density: 2.71
+      grams: 25
+    - smiles: "[Na+].[Na+].[O-]S(=O)(=O)[O-]"
+      density: 2.66
+      grams: 10
+    - smiles: "S1SSSSSSS1"
+      density: 2.07
+      grams: 10
+    - smiles: "[Fe+2].[S-][S-]"
+      density: 5.01
+      grams: 5
+  NETHERITE_INGOT:
+    - smiles: "[Pt]"
+      density: 21.45
+      grams: 90
+    - smiles: "[Au]"
+      density: 19.32
+      grams: 10
+  RAW_COPPER:
+    - smiles: "[Cu+2].[Cu+2].[O-]C([O-])=O.[OH-].[OH-]"
+      density: 4.05
+      grams: 60
+    - smiles: "[Cu+2].[Fe+2].[S-2].[S-2]"
+      density: 4.2
+      grams: 40
+  RAW_GOLD:
+    - smiles: "[Au]"
+      density: 19.32
+      grams: 75
+    - smiles: "O=[Si]=O"
+      density: 2.65
+      grams: 25
+  RAW_IRON:
+    - smiles: "O=[Fe]O[Fe]=O"
+      density: 5.26
+      grams: 70
+    - smiles: "O=[Fe]O[Fe]O[Fe]=O"
+      density: 5.17
+      grams: 30
+  REDSTONE:
+    - smiles: "C.[U]"
+      density: 16.63
+      grams: 100
+  RESIN_CLUMP:
+    - smiles: "CC(C)C1=CC2=CCC3C(C)(CCCC3(C)C(=O)O)C2CC1"
+      density: 1.07
+      grams: 70
+    - smiles: "OC1=CC=C(CC2=CC=C(O)C=C2)C=C1"
+      density: 1.25
+      grams: 20
+    - smiles: "C1=CC=C[CH-]1.C1=CC=C[CH-]1.[Fe+2]"
+      density: 1.49
+      grams: 10
+  BAMBOO:
+    - smiles: "OCC1OC(O)C(O)C(O)C1O"
+      density: 1.5
+      grams: 50
+    - smiles: "COC1=CC(CC=C)=CC=C1O"
+      density: 1.35
+      grams: 35
+    - smiles: "O=[Si]=O"
+      density: 2.65
+      grams: 15
+  BONE_MEAL:
+    - smiles: "[Ca+2].[Ca+2].[Ca+2].[Ca+2].[Ca+2].[O-]P([O-])([O-])=O.[O-]P([O-])([O-])=O.[O-]P([O-])([O-])=O.[OH-]"
+      density: 3.16
+      grams: 85
+    - smiles: "NCC(=O)O"
+      density: 1.61
+      grams: 15
+  DRIED_KELP:
+    - smiles: "OC1C(O)C(O)OC(C(=O)O)C1O"
+      density: 1.6
+      grams: 65
+    - smiles: "OCC(O)C(O)C(O)C(O)CO"
+      density: 1.49
+      grams: 25
+    - smiles: "[K+].[I-]"
+      density: 3.12
+      grams: 10
+  WHEAT:
+    - smiles: "OCC1OC(O)C(O)C(O)C1O"
+      density: 1.54
+      grams: 75
+    - smiles: "NC(CCC(=O)O)C(=O)O"
+      density: 1.54
+      grams: 15
+    - smiles: "O"
+      density: 1.0
+      grams: 10
+  MELON_SLICE:
+    - smiles: "O"
+      density: 1.0
+      grams: 90
+    - smiles: "OCC1(O)OCC(O)C1O"
+      density: 1.69
+      grams: 8
+    - smiles: "NC(CCCNC(=O)N)C(=O)O"
+      density: 1.29
+      grams: 1
+    - smiles: "CC(=CCCC(=CC=CC(=CC=CC(=CC=CC=C(C)C=CC=C(C)C=CC=C(C)CCC=C(C)C)C)C)C)C"
+      density: 0.89
+      grams: 1
+  NETHER_WART:
+    - smiles: "CC(=O)NC1C(O)OC(CO)C(O)C1O"
+      density: 1.42
+      grams: 60
+    - smiles: "CC(C)C(C)C=CC(C)C1CCC2C3=CC=C4CC(O)CCC4(C)C3CCC12C"
+      density: 1.04
+      grams: 25
+    - smiles: "COC1=CC(CNC(=O)CCCCC=CC(C)C)=CC=C1O"
+      density: 1.04
+      grams: 15
+  PRISMARINE_SHARD:
+    - smiles: "O=[Si]=O"
+      density: 2.65
+      grams: 60
+    - smiles: "[Cu+2].[O-][Si]([O-])=O.O"
+      density: 2.4
+      grams: 30
+    - smiles: "[Co+2].[O-][Si]([O-])=O"
+      density: 3.6
+      grams: 10
+  SLIME_BALL:
+    - smiles: "O"
+      density: 1.0
+      grams: 80
+    - smiles: "CC(O)CC(O)"
+      density: 1.19
+      grams: 15
+    - smiles: "[Na+].[Na+].[O-]B1OB([O-])OB(O1)[O-]"
+      density: 1.73
+      grams: 5
+  QUARTZ:
+    - smiles: "O=[Si]=O"
+      density: 2.65
+      grams: 100
+  BRICK:
+    - smiles: "O=[Si]=O"
+      density: 2.65
+      grams: 60
+    - smiles: "O=[Al]O[Al]=O"
+      density: 3.95
+      grams: 32
+    - smiles: "O=[Fe]O[Fe]=O"
+      density: 5.26
+      grams: 8
+  CLAY_BALL:
+    - smiles: "O=[Si]1O[Al](O)O[Si](=O)O[Al](O)O1"
+      density: 2.6
+      grams: 80
+    - smiles: "O"
+      density: 1.0
+      grams: 20
+  POINTED_DRIPSTONE:
+    - smiles: "[Ca+2].[O-]C([O-])=O"
+      density: 2.71
+      grams: 100
+  GLOWSTONE_DUST:
+    - smiles: "[Zn+2].[S-2]"
+      density: 4.09
+      grams: 85
+    - smiles: "P"
+      density: 1.82
+      grams: 15
+  MAGMA_CREAM:
+    - smiles: "O=[Si]=O"
+      density: 2.65
+      grams: 50
+    - smiles: "[Mg+2].[Fe+2].[O-][Si]([O-])([O-])[O-]"
+      density: 3.3
+      grams: 35
+    - smiles: "CC(O)CC(O)"
+      density: 1.19
+      grams: 15
+  SAND:
+    - smiles: "O=[Si]=O"
+      density: 2.65
+      grams: 100
+  SNOWBALL:
+    - smiles: "O"
+      density: 0.917
+      grams: 100
+  STRING:
+    - smiles: "NCC(=O)NC(C)C(=O)O"
+      density: 1.35
+      grams: 100
+  POPPED_CHORUS_FRUIT:
+    - smiles: "OCC1OC(O)C(O)C(O)C1O"
+      density: 1.5
+      grams: 70
+    - smiles: "B(O)(O)O"
+      density: 1.44
+      grams: 20
+    - smiles: "[Xe]"
+      density: 0.0059
+      grams: 10
+  SUGAR_CANE:
+    - smiles: "OCC1OC(C(O)C(O)C1O)OC2(CO)OCC(O)C2O"
+      density: 1.59
+      grams: 35
+    - smiles: "OCC1OC(O)C(O)C(O)C1O"
+      density: 1.5
+      grams: 45
+    - smiles: "O"
+      density: 1.0
+      grams: 20
+  HONEYCOMB:
+    - smiles: "CCCCCCCCCCCCCCCC(=O)OCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+      density: 0.95
+      grams: 85
+    - smiles: "COC1=C(O)C=CC(=C1)C=CC(=O)O"
+      density: 1.33
+      grams: 15
+  FLINT:
+    - smiles: "O=[Si]=O"
+      density: 2.6
+      grams: 100
+  CHARCOAL:
+    - smiles: "[C]"
+      density: 1.85
+      grams: 90
+    - smiles: "C1=CC=CC=C1"
+      density: 0.88
+      grams: 10
+  GUNPOWDER:
+    - smiles: "[K+].[O-][N+](=O)[O-]"
+      density: 2.11
+      grams: 75
+    - smiles: "[C]"
+      density: 1.85
+      grams: 15
+    - smiles: "S1SSSSSSS1"
+      density: 2.07
+      grams: 10
+  BLAZE_POWDER:
+    - smiles: "OS(=O)(=O)O"
+      density: 1.84
+      grams: 50
+    - smiles: "S1SSSSSSS1"
+      density: 2.07
+      grams: 30
+    - smiles: "CC(C)=CCCC(C)=CCCC(C)=CCO"
+      density: 0.88
+      grams: 20
+  ENDER_PEARL:
+    - smiles: "[Ca+2].[O-]C([O-])=O"
+      density: 2.93
+      grams: 85
+    - smiles: "O"
+      density: 1.0
+      grams: 10
+    - smiles: "[Xe]"
+      density: 0.0059
+      grams: 5
+  AMETHYST_SHARD:
+    - smiles: "O=[Si]=O"
+      density: 2.65
+      grams: 98
+    - smiles: "O=[Fe]O[Fe]=O"
+      density: 5.26
+      grams: 2
+  FEATHER:
+    - smiles: "NCC(CS)C(=O)NC(CO)C(=O)O"
+      density: 1.3
+      grams: 100
+  LEATHER:
+    - smiles: "NCC(=O)NC1CCCN1C(=O)O"
+      density: 1.25
+      grams: 100
+
+names:
+  "[C]": "Carbon"
+  "[Cu]": "Copper"
+  "[Au]": "Gold"
+  "[Fe]": "Iron"
+  "[Pt]": "Platinum"
+  "[Xe]": "Xenon"
+  "O": "Water"
+  "O=C=O": "Carbon Dioxide"
+  "O=[Si]=O": "Silicon Dioxide"
+  "O=[Al]O[Al]=O": "Aluminium Oxide"
+  "[Be]=O": "Beryllium Oxide"
+  "P": "Phosphorus"
+  "C.[U]": "Radioactive Redstone Essence"
+  "S1SSSSSSS1": "Cyclooctasulfur"
+  "OS(=O)(=O)O": "Sulfuric Acid"
+  "B(O)(O)O": "Boric Acid"
+  "OCC1OC(O)C(O)C(O)C1O": "Glucose"
+  "[Na+].[Na+].[O-]S(=O)(=O)[O-]": "Sodium Sulfate"
+  "[Ca+2].[O-]C([O-])=O": "Calcium Carbonate"
+  "[Zn+2].[S-2]": "Zinc Sulfide"
+  "[K+].[O-][N+](=O)[O-]": "Potassium Nitrate"
+  "[K+].[I-]": "Potassium Iodide"
+  "O=[Fe]O[Fe]=O": "Iron(III) Oxide"
+  "O=[Fe]O[Fe]O[Fe]=O": "Iron(II,III) Oxide"
+
+labs:
+  standard:
+    default-temperature: 298.15
+    min-temperature: 273.15
+    max-temperature: 323.15
+    temperature-steps:
+      - 1
+      - 5
+      - 10
+      - 25
+    default-pressure: 1.0
+    temperature-control: true
+    voltage-control: false
+  furnace:
+    default-temperature: 298.15
+    min-temperature: 298.15
+    max-temperature: 1500.0
+    temperature-steps:
+      - 1
+      - 5
+      - 10
+      - 25
+    default-pressure: 1.0
+    temperature-control: true
+    voltage-control: false
+  cooler:
+    default-temperature: 298.15
+    min-temperature: 77.0
+    max-temperature: 298.15
+    temperature-steps:
+      - 1
+      - 5
+      - 10
+      - 25
+    default-pressure: 1.0
+    temperature-control: true
+    voltage-control: false
+  electrical:
+    default-temperature: 298.15
+    min-temperature: 273.15
+    max-temperature: 373.15
+    temperature-steps:
+      - 1
+      - 5
+      - 10
+    default-voltage: 0.0
+    min-voltage: 0.0
+    max-voltage: 12.0
+    voltage-steps:
+      - 0.5
+      - 1
+      - 2
+      - 5
+    default-pressure: 1.0
+    temperature-control: false
+    voltage-control: true
+
